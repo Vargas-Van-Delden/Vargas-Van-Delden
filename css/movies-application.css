@@ -3,9 +3,18 @@
 
 
 /*CLASSES*/
+.loadingimage{
+    width: 150px;
+    height: 150px;
+    background-color: firebrick;
+}
 
 
 
 /*ID's*/
-
+/*#loadingimage{*/
+/*    width: 150px;*/
+/*    height: 150px;*/
+/*    background-color: firebrick;*/
+/*}*/
 
