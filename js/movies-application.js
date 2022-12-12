@@ -9,13 +9,6 @@ var submitButton = document.querySelector('#submit-movie');
 
 getList();
 
-// function addEvents(){
-// 	$('.deletethis').click( function (){
-// 		console.log($(this).val());
-// 		deleteMovie($(this).val());
-// 	})
-// }
-
 function getList() {
     $('#reload').toggleClass('loadingimage')
     var movielist = document.getElementById('movielist');
@@ -23,15 +16,41 @@ function getList() {
         .then(data => {
             let html = '';
             for (i = 0; i < data.length; i++) {
+                html += `<div class="container border">`
                 html += `<h1>${data[i].title} </h1>`
                 html += `<h3>${data[i].rating} </h3>`
-                html += `<button name="Delete" class="deletethis" type="submit" value="${data[i].id}">Delete</button>`
+                html += `<button name="Edit" class="editThis" type="submit" value="${data[i].id}">Edit Details</button>`
+                html += `<button name="Delete" class="deletethis" type="submit" value="${data[i].id}">Delete Movie</button>`
+                html += `</div>`
             }
             movielist.innerHTML = html;
             // Delete Button - Event Listener
             $('.deletethis').click(function () {
                 deleteMovie($(this).val());
             })
+            $('.editThis').click(function () {
+                let title = $(this).parent().children('h1').first().html()
+                console.log(title)
+                let rating = $(this).parent().children('h3').first().html()
+                console.log(rating)
+                $(this).parent().children('h1').first().html(`<input type='text' value='' class="editarea">`)
+
+                // editMovie($(this).val());
+
+                $(".editarea").keyup(function(event){
+                    var keyStroke = event.key;
+                    if (keyStroke === 'Enter'){
+                        let textarea = $(this).val()
+                        console.log(textarea)
+                        console.log($(this).parent().html(`<h1>${textarea}</h1>`))
+                    }
+                    else{
+                        console.log("test")
+                    }
+                });
+
+            })
+            // console.log(data)
         })
         .then(() => $('#reload').toggleClass('loadingimage')
         )
@@ -53,7 +72,7 @@ function addMovie(m) {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(movieObj),
-    }).then(() => fetch("https://cloud-happy-fox.glitch.me/movies")).then(resp => resp.json()).then(movies => console.log(movies));
+    }).then(() => fetch("https://cloud-happy-fox.glitch.me/movies")).then(resp => resp.json()).then(() => getList());
     addTitle.value = ''; //resets typed value
 
 }
@@ -66,13 +85,26 @@ function deleteMovie(movieId) {
     }).then(() => fetch("https://cloud-happy-fox.glitch.me/movies")).then(resp => resp.json()).then(() => getList());
 }
 
+function editMovie(movieID){
+    let edittedMovie = {
+        title: "PLEASE PLEASE WORK",
+        rating: "-1"
+    };
+    fetch("https://cloud-happy-fox.glitch.me/movies/" + movieID, {
+    method: "PUT",
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(edittedMovie)
+})
+.then(() => fetch("https://cloud-happy-fox.glitch.me/movies")).then(resp => resp.json()).then(() => getList());
+}
+
 submitButton.addEventListener('click', addMovie);
 
 // Todo
-//  Refresh button for API when list edited
 //  User edit movies attributes in real time
-//  Allow user to remove movie from list
-//  As we create the styling add delete button next to movie in list
+//  Style'er up
 
 // getList();
 

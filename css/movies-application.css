@@ -1,5 +1,7 @@
 /*Elements*/
-
+span {
+    border: solid 1px red;
+}
 
 
 /*CLASSES*/
