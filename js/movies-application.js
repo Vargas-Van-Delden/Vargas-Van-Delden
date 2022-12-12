@@ -1,70 +1,72 @@
-// loader;
-// $('#reload').addClass('loadingimage')
+//used for teasting
 fetch("https://cloud-happy-fox.glitch.me/movies").then(resp => resp.json()).then(data => console.log(data))
 
+// Variables
 var toggle = $('#reload').toggleClass('loadingimage')
 var addRating = document.getElementById("added-movie")
 var addTitle = document.getElementById('submit-title');
 var submitButton = document.querySelector('#submit-movie');
-var deleteButton = document.querySelector('#delete-button');
 
+getList();
 
-$('#reload').click(function () {
-	getList()
-})
+// function addEvents(){
+// 	$('.deletethis').click( function (){
+// 		console.log($(this).val());
+// 		deleteMovie($(this).val());
+// 	})
+// }
 
 function getList() {
-	$('#reload').toggleClass('loadingimage')
-	var movielist = document.getElementById('movielist');
-// .then(data => lastcommit.innerText = ('Date of last commit: ' + data[0].commit.author.date))
-	fetch("https://cloud-happy-fox.glitch.me/movies").then(resp => resp.json())
-		.then(data => {
-			let html = '';
-			for (i = 0; i < data.length; i++) {
-				deleteMovie(data[i].id)
-				html += `<h1>${data[i].title} </h1>`
-				html += `<h3>${data[i].rating} </h3>`
-				// deleteMovie(data[i].id)
-				"https://cloud-happy-fox.glitch.me/movies"/data[i].id(deleteButton)
-			}
-			movielist.innerHTML = html;
-			// console.log(movielist);
-		})
-		.then(() => $('#reload').toggleClass('loadingimage')
-		)
+    $('#reload').toggleClass('loadingimage')
+    var movielist = document.getElementById('movielist');
+    fetch("https://cloud-happy-fox.glitch.me/movies").then(resp => resp.json())
+        .then(data => {
+            let html = '';
+            for (i = 0; i < data.length; i++) {
+                html += `<h1>${data[i].title} </h1>`
+                html += `<h3>${data[i].rating} </h3>`
+                html += `<button name="Delete" class="deletethis" type="submit" value="${data[i].id}">Delete</button>`
+            }
+            movielist.innerHTML = html;
+            // Delete Button - Event Listener
+            $('.deletethis').click(function () {
+                deleteMovie($(this).val());
+            })
+        })
+        .then(() => $('#reload').toggleClass('loadingimage')
+        )
 };
 
 // ADD Movie
 
 function addMovie(m) {
-	m.preventDefault();
-	let movieObj = {
-		title: addTitle.value,
-		rating: addRating.value
-	};
+    m.preventDefault();
+    let movieObj = {
+        title: addTitle.value,
+        rating: addRating.value
+    };
 
-	// Fetch post to movies json
-	fetch("https://cloud-happy-fox.glitch.me/movies", {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(movieObj),
- }).then(() => fetch("https://cloud-happy-fox.glitch.me/movies")).then(resp => resp.json()).then(movies => console.log(movies));
-	addTitle.value = ''; //resets typed value
+    // Fetch post to movies json
+    fetch("https://cloud-happy-fox.glitch.me/movies", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(movieObj),
+    }).then(() => fetch("https://cloud-happy-fox.glitch.me/movies")).then(resp => resp.json()).then(movies => console.log(movies));
+    addTitle.value = ''; //resets typed value
 
 }
-submitButton.addEventListener('click', addMovie);
-deleteButton.addEventListener('click', deleteMovie );
+
 
 // Delete Movie list
 function deleteMovie(movieId) {
-	fetch("https://cloud-happy-fox.glitch.me/movies/" + movieId , {
-		method: "DELETE"
-	}).then(() => fetch("https://cloud-happy-fox.glitch.me/movies")).then(resp => resp.json()).then(movies => console.log(movies));
+    fetch("https://cloud-happy-fox.glitch.me/movies/" + movieId, {
+        method: "DELETE"
+    }).then(() => fetch("https://cloud-happy-fox.glitch.me/movies")).then(resp => resp.json()).then(() => getList());
 }
 
-
+submitButton.addEventListener('click', addMovie);
 
 // Todo
 //  Refresh button for API when list edited
