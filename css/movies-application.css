@@ -11,10 +11,10 @@
 
 
 
-/*ID's*/
-/*#loadingimage{*/
-/*    width: 150px;*/
-/*    height: 150px;*/
-/*    background-color: firebrick;*/
-/*}*/
+ID's
+#delete-button{
+    width: 150px;
+    height: 150px;
+    background-color: yellow;
+}
 

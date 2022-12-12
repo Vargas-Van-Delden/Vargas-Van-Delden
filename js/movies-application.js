@@ -6,6 +6,7 @@ var toggle = $('#reload').toggleClass('loadingimage')
 var addRating = document.getElementById("added-movie")
 var addTitle = document.getElementById('submit-title');
 var submitButton = document.querySelector('#submit-movie');
+var deleteButton = document.querySelector('#delete-button');
 
 
 $('#reload').click(function () {
@@ -20,8 +21,11 @@ function getList() {
 		.then(data => {
 			let html = '';
 			for (i = 0; i < data.length; i++) {
+				deleteMovie(data[i].id)
 				html += `<h1>${data[i].title} </h1>`
 				html += `<h3>${data[i].rating} </h3>`
+				// deleteMovie(data[i].id)
+				"https://cloud-happy-fox.glitch.me/movies"/data[i].id(deleteButton)
 			}
 			movielist.innerHTML = html;
 			// console.log(movielist);
@@ -51,23 +55,22 @@ function addMovie(m) {
 
 }
 submitButton.addEventListener('click', addMovie);
+deleteButton.addEventListener('click', deleteMovie );
 
-// HOW TO POST
-// const newMovie = {
-//     title: "Dr. Dolittle"
-// };
-// fetch("https://vast-organic-farm.glitch.me/movies", {
-//     method: 'POST',
-//     headers: {
-//         'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify(newMovie),
-// }).then(() => fetch("https://vast-organic-farm.glitch.me/movies%22)).then(resp => resp.json()).then(movies => console.log(movies));
+// Delete Movie list
+function deleteMovie(movieId) {
+	fetch("https://cloud-happy-fox.glitch.me/movies/" + movieId , {
+		method: "DELETE"
+	}).then(() => fetch("https://cloud-happy-fox.glitch.me/movies")).then(resp => resp.json()).then(movies => console.log(movies));
+}
+
+
 
 // Todo
 //  Refresh button for API when list edited
 //  User edit movies attributes in real time
 //  Allow user to remove movie from list
+//  As we create the styling add delete button next to movie in list
 
 // getList();
 
