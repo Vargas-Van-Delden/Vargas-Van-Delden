@@ -24,29 +24,45 @@ function getList() {
 				html += `<h3>${data[i].rating} </h3>`
 			}
 			movielist.innerHTML = html;
+			// console.log(movielist);
 		})
 		.then(() => $('#reload').toggleClass('loadingimage')
 		)
-}
-// ADD Movie
+};
 
+// ADD Movie
 
 function addMovie(m) {
 	m.preventDefault();
 	let movieObj = {
-	// 	id: coffees.length + 1,
 		title: addTitle.value,
 		rating: addRating.value
 	};
+
 	// Fetch post to movies json
-	data.push(movieObj);
-	// Display add coffees
-	// dbody.innerHTML = renderCoffees(coffees);
-	// localStorage.setItem(coffeeObj.id.toString(), JSON.stringify(coffeeObj)); //key(id): "coffeeObj"
-	JSON.parse(window.localStorage.getItem(coffeeObj.id.toString()));
+	fetch("https://cloud-happy-fox.glitch.me/movies", {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(movieObj),
+ }).then(() => fetch("https://cloud-happy-fox.glitch.me/movies")).then(resp => resp.json()).then(movies => console.log(movies));
 	addTitle.value = ''; //resets typed value
+
 }
 submitButton.addEventListener('click', addMovie);
+
+// HOW TO POST
+// const newMovie = {
+//     title: "Dr. Dolittle"
+// };
+// fetch("https://vast-organic-farm.glitch.me/movies", {
+//     method: 'POST',
+//     headers: {
+//         'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify(newMovie),
+// }).then(() => fetch("https://vast-organic-farm.glitch.me/movies%22)).then(resp => resp.json()).then(movies => console.log(movies));
 
 // Todo
 //  Refresh button for API when list edited
