@@ -33,40 +33,24 @@ function getList() {
 			$('.editThis').click(function () {
 				let editId = ($(this).val());
 				let title = $(this).parent().children('h1').first().html()
-				// console.log(title)
 				let rating = $(this).parent().children('h3').first().html()
-				console.log(rating)
-				$(this).parent().children('h1').first().html(`<input type='text' value='${title}' class="editarea">`)
-                $(this).parent().children('h3').first().html(editRating(rating))
-                // console.log(editRating(rating));
-				// $(this).parent().children('h3').first().html(`<select class="form-select" aria-label="Default select example">
-                //                                                     <option value="1">1</option>
-                //                                                     <option value="2">2</option>
-                //                                                     <option selected value="3">3</option>
-                //                                                     <option value="4">4</option>
-                //                                                     <option value="5">5</option>
-                //                                                </select>`)
-
+				$(this).parent().children('h1').first().html(`<input type='text' value='${title}' class="editarea">`);
+                $(this).parent().children('h3').first().html(editRating(rating));
 
 				// editMovie($(this).val());
 
 				$(".editarea").keyup(function (event) {
-					console.log(editId);
-					console.log(title)
 					let keyStroke = event.key;
 					if (keyStroke === 'Enter') {
 						let textarea = $(this).val();
-						rating = $(this).parent().children('select').first().val();
-						console.log(rating);
-						// console.log(textarea)
-						editMovie(editId, textarea, rating);
+						let selectedRating = $("#selector").val();
+						console.log(selectedRating);
+						editMovie(editId, textarea, selectedRating);
 					} else {
-						// console.log("test")
+
 					}
 				});
-
 			})
-			// console.log(data)
 		})
 		.then(() => $('#reload').toggleClass('loadingimage')
 		)
@@ -106,7 +90,6 @@ function editMovie(movieID, title, rating) {
 	let edittedMovie = {
 		title: title,
 		rating: rating,
-
 	};
 	fetch("https://cloud-happy-fox.glitch.me/movies/" + movieID, {
 		method: "PUT",
@@ -124,7 +107,7 @@ submitButton.addEventListener('click', addMovie);
 function editRating(rating){
     let html = ""
     if(rating == 1){
-        html += `<select class="form-select" aria-label="Default select example">
+        html += `<select id="selector" class="form-select" aria-label="Default select example">
                     <option selected value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -133,7 +116,7 @@ function editRating(rating){
                 </select>`
         return html;
     }else if(rating == 2){
-		html += `<select class="form-select" aria-label="Default select example">
+		html += `<select id="selector" class="form-select" aria-label="Default select example">
                     <option value="1">1</option>
                     <option selected value="2">2</option>
                     <option value="3">3</option>
@@ -142,7 +125,7 @@ function editRating(rating){
                 </select>`
 		return html;
 	}else if(rating == 3){
-		html += `<select class="form-select" aria-label="Default select example">
+		html += `<select id="selector" class="form-select" aria-label="Default select example">
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option selected value="3">3</option>
@@ -151,7 +134,7 @@ function editRating(rating){
                 </select>`
 		return html;
 	}else if(rating == 4){
-		html += `<select class="form-select" aria-label="Default select example">
+		html += `<select id="selector" class="form-select" aria-label="Default select example">
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -160,7 +143,7 @@ function editRating(rating){
                 </select>`
 		return html;
 	}else if(rating == 5){
-		html += `<select class="form-select" aria-label="Default select example">
+		html += `<select id="selector" class="form-select" aria-label="Default select example">
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -184,6 +167,8 @@ function editRating(rating){
 
 // Todo
 //  User edit movies attributes in real time
+// 	Work on errors with the edit details to other movies and multiple clicks.
+// 	Edit details button needs submit button
 //  Style'er up
 
 // getList();
