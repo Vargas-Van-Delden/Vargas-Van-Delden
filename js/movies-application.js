@@ -8,7 +8,7 @@ var addTitle = document.getElementById('submit-title');
 var submitButton = document.querySelector('#submit-movie');
 
 getList();
-
+// Set up the html using JQuery
 function getList() {
     $('#reload').toggleClass('loadingimage')
     var movielist = document.getElementById('movielist');
@@ -28,6 +28,7 @@ function getList() {
             $('.deletethis').click(function () {
                 deleteMovie($(this).val());
             })
+            // Edit Button
             $('.editThis').click(function () {
                 let title = $(this).parent().children('h1').first().html()
                 console.log(title)
@@ -84,7 +85,7 @@ function deleteMovie(movieId) {
         method: "DELETE"
     }).then(() => fetch("https://cloud-happy-fox.glitch.me/movies")).then(resp => resp.json()).then(() => getList());
 }
-
+// Edit Movie List
 function editMovie(movieID){
     let edittedMovie = {
         title: "PLEASE PLEASE WORK",
