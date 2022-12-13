@@ -1,7 +1,7 @@
 /*Elements*/
-span {
-    border: solid 1px red;
-}
+/*span {*/
+/*    border: solid 1px red;*/
+/*}*/
 
 
 /*CLASSES*/
@@ -10,10 +10,12 @@ span {
     height: 150px;
     background-color: firebrick;
 }
+.hidden{
+    display:none;
+}
 
 
-
-ID's
+/*ID's*/
 #delete-button{
     width: 150px;
     height: 150px;
