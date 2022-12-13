@@ -36,6 +36,7 @@ function getList() {
 				let rating = $(this).parent().children('h3').first().html()
 				$(this).parent().children('h1').first().html(`<input type='text' value='${title}' class="editarea">`);
                 $(this).parent().children('h3').first().html(editRating(rating));
+				$(this).toggleClass('hidden')
 
 				// editMovie($(this).val());
 
@@ -46,8 +47,15 @@ function getList() {
 						let selectedRating = $("#selector").val();
 						console.log(selectedRating);
 						editMovie(editId, textarea, selectedRating);
-					} else {
+					}
 
+				});
+				$(".ratingArea").keyup(function (event) {
+					let keyStroke = event.key;
+					if (keyStroke === 'Enter') {
+						let titleArea = $('.editarea').val();
+						let selectedRating = $("#selector").val();
+						editMovie(editId, titleArea, selectedRating);
 					}
 				});
 			})
@@ -107,7 +115,7 @@ submitButton.addEventListener('click', addMovie);
 function editRating(rating){
     let html = ""
     if(rating == 1){
-        html += `<select id="selector" class="form-select" aria-label="Default select example">
+        html += `<select id="selector" class="form-select ratingArea" aria-label="Default select example">
                     <option selected value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -116,7 +124,7 @@ function editRating(rating){
                 </select>`
         return html;
     }else if(rating == 2){
-		html += `<select id="selector" class="form-select" aria-label="Default select example">
+		html += `<select id="selector" class="form-select ratingArea" aria-label="Default select example">
                     <option value="1">1</option>
                     <option selected value="2">2</option>
                     <option value="3">3</option>
@@ -125,7 +133,7 @@ function editRating(rating){
                 </select>`
 		return html;
 	}else if(rating == 3){
-		html += `<select id="selector" class="form-select" aria-label="Default select example">
+		html += `<select id="selector" class="form-select ratingArea" aria-label="Default select example">
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option selected value="3">3</option>
@@ -134,7 +142,7 @@ function editRating(rating){
                 </select>`
 		return html;
 	}else if(rating == 4){
-		html += `<select id="selector" class="form-select" aria-label="Default select example">
+		html += `<select id="selector" class="form-select ratingArea" aria-label="Default select example">
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -143,7 +151,7 @@ function editRating(rating){
                 </select>`
 		return html;
 	}else if(rating == 5){
-		html += `<select id="selector" class="form-select" aria-label="Default select example">
+		html += `<select id="selector" class="form-select ratingArea" aria-label="Default select example">
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
