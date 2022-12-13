@@ -8,100 +8,179 @@ var addTitle = document.getElementById('submit-title');
 var submitButton = document.querySelector('#submit-movie');
 
 getList();
+
 // Set up the html using JQuery
 function getList() {
-    $('#reload').toggleClass('loadingimage')
-    var movielist = document.getElementById('movielist');
-    fetch("https://cloud-happy-fox.glitch.me/movies").then(resp => resp.json())
-        .then(data => {
-            let html = '';
-            for (i = 0; i < data.length; i++) {
-                html += `<div class="container border">`
-                html += `<h1>${data[i].title} </h1>`
-                html += `<h3>${data[i].rating} </h3>`
-                html += `<button name="Edit" class="editThis" type="submit" value="${data[i].id}">Edit Details</button>`
-                html += `<button name="Delete" class="deletethis" type="submit" value="${data[i].id}">Delete Movie</button>`
-                html += `</div>`
-            }
-            movielist.innerHTML = html;
-            // Delete Button - Event Listener
-            $('.deletethis').click(function () {
-                deleteMovie($(this).val());
-            })
-            // Edit Button
-            $('.editThis').click(function () {
-                let title = $(this).parent().children('h1').first().html()
-                console.log(title)
-                let rating = $(this).parent().children('h3').first().html()
-                console.log(rating)
-                $(this).parent().children('h1').first().html(`<input type='text' value='' class="editarea">`)
+	$('#reload').toggleClass('loadingimage')
+	var movielist = document.getElementById('movielist');
+	fetch("https://cloud-happy-fox.glitch.me/movies").then(resp => resp.json())
+		.then(data => {
+			let html = '';
+			for (i = 0; i < data.length; i++) {
+				html += `<div class="container border">`
+				html += `<h1>${data[i].title} </h1>`
+				html += `<h3>${data[i].rating} </h3>`
+				html += `<button name="Edit" class="editThis" type="submit" value="${data[i].id}">Edit Details</button>`
+				html += `<button name="Delete" class="deletethis" type="submit" value="${data[i].id}">Delete Movie</button>`
+				html += `</div>`
+			}
+			movielist.innerHTML = html;
+			// Delete Button - Event Listener
+			$('.deletethis').click(function () {
+				deleteMovie($(this).val());
+			})
+			// Edit Button
+			$('.editThis').click(function () {
+				let editId = ($(this).val());
+				let title = $(this).parent().children('h1').first().html()
+				// console.log(title)
+				let rating = $(this).parent().children('h3').first().html()
+				console.log(rating)
+				$(this).parent().children('h1').first().html(`<input type='text' value='${title}' class="editarea">`)
+                $(this).parent().children('h3').first().html(editRating(rating))
+                // console.log(editRating(rating));
+				// $(this).parent().children('h3').first().html(`<select class="form-select" aria-label="Default select example">
+                //                                                     <option value="1">1</option>
+                //                                                     <option value="2">2</option>
+                //                                                     <option selected value="3">3</option>
+                //                                                     <option value="4">4</option>
+                //                                                     <option value="5">5</option>
+                //                                                </select>`)
 
-                // editMovie($(this).val());
 
-                $(".editarea").keyup(function(event){
-                    var keyStroke = event.key;
-                    if (keyStroke === 'Enter'){
-                        let textarea = $(this).val()
-                        console.log(textarea)
-                        console.log($(this).parent().html(`<h1>${textarea}</h1>`))
-                    }
-                    else{
-                        console.log("test")
-                    }
-                });
+				// editMovie($(this).val());
 
-            })
-            // console.log(data)
-        })
-        .then(() => $('#reload').toggleClass('loadingimage')
-        )
+				$(".editarea").keyup(function (event) {
+					console.log(editId);
+					console.log(title)
+					let keyStroke = event.key;
+					if (keyStroke === 'Enter') {
+						let textarea = $(this).val();
+						rating = $(this).parent().children('select').first().val();
+						console.log(rating);
+						// console.log(textarea)
+						editMovie(editId, textarea, rating);
+					} else {
+						// console.log("test")
+					}
+				});
+
+			})
+			// console.log(data)
+		})
+		.then(() => $('#reload').toggleClass('loadingimage')
+		)
 };
 
 // ADD Movie
 
 function addMovie(m) {
-    m.preventDefault();
-    let movieObj = {
-        title: addTitle.value,
-        rating: addRating.value
-    };
+	m.preventDefault();
+	let movieObj = {
+		title: addTitle.value,
+		rating: addRating.value
+	};
 
-    // Fetch post to movies json
-    fetch("https://cloud-happy-fox.glitch.me/movies", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(movieObj),
-    }).then(() => fetch("https://cloud-happy-fox.glitch.me/movies")).then(resp => resp.json()).then(() => getList());
-    addTitle.value = ''; //resets typed value
+	// Fetch post to movies json
+	fetch("https://cloud-happy-fox.glitch.me/movies", {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify(movieObj),
+	}).then(() => fetch("https://cloud-happy-fox.glitch.me/movies")).then(resp => resp.json()).then(() => getList());
+	addTitle.value = ''; //resets typed value
 
 }
 
 
 // Delete Movie list
 function deleteMovie(movieId) {
-    fetch("https://cloud-happy-fox.glitch.me/movies/" + movieId, {
-        method: "DELETE"
-    }).then(() => fetch("https://cloud-happy-fox.glitch.me/movies")).then(resp => resp.json()).then(() => getList());
+	fetch("https://cloud-happy-fox.glitch.me/movies/" + movieId, {
+		method: "DELETE"
+	}).then(() => fetch("https://cloud-happy-fox.glitch.me/movies")).then(resp => resp.json()).then(() => getList());
 }
+
 // Edit Movie List
-function editMovie(movieID){
-    let edittedMovie = {
-        title: "PLEASE PLEASE WORK",
-        rating: "-1"
-    };
-    fetch("https://cloud-happy-fox.glitch.me/movies/" + movieID, {
-    method: "PUT",
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(edittedMovie)
-})
-.then(() => fetch("https://cloud-happy-fox.glitch.me/movies")).then(resp => resp.json()).then(() => getList());
+function editMovie(movieID, title, rating) {
+	let edittedMovie = {
+		title: title,
+		rating: rating,
+
+	};
+	fetch("https://cloud-happy-fox.glitch.me/movies/" + movieID, {
+		method: "PUT",
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(edittedMovie)
+	})
+		.then(() => fetch("https://cloud-happy-fox.glitch.me/movies")).then(resp => resp.json()).then(() => getList());
 }
 
 submitButton.addEventListener('click', addMovie);
+
+// Edit Rating Function
+function editRating(rating){
+    let html = ""
+    if(rating == 1){
+        html += `<select class="form-select" aria-label="Default select example">
+                    <option selected value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>`
+        return html;
+    }else if(rating == 2){
+		html += `<select class="form-select" aria-label="Default select example">
+                    <option value="1">1</option>
+                    <option selected value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>`
+		return html;
+	}else if(rating == 3){
+		html += `<select class="form-select" aria-label="Default select example">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option selected value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>`
+		return html;
+	}else if(rating == 4){
+		html += `<select class="form-select" aria-label="Default select example">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option selected value="4">4</option>
+                    <option value="5">5</option>
+                </select>`
+		return html;
+	}else if(rating == 5){
+		html += `<select class="form-select" aria-label="Default select example">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option selected value="5">5</option>
+                </select>`
+		return html;
+	}
+	else {
+        html = "test"
+        return html;
+    }
+// `<select class="form-select" aria-label="Default select example">
+//     <option value="1">1</option>
+//     <option value="2">2</option>
+//     <option selected value="3">3</option>
+//     <option value="4">4</option>
+//     <option value="5">5</option>
+// </select>`
+}
 
 // Todo
 //  User edit movies attributes in real time
