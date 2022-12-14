@@ -17,7 +17,7 @@ function getList() {
         .then(data => {
             let html = '';
             for (i = 0; i < data.length; i++) {
-                html += `<div class="container border">`
+                html += `<div class="container col-sm-3">`
                 html += `<h1>${data[i].title} </h1>`
                 html += `<h3>${data[i].rating} </h3>`
 				html += `<button name="SaveChanges" class="saveThis hidden" type="submit" value="${data[i].id}">Save Changes</button>`

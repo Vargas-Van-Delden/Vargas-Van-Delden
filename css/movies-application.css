@@ -1,8 +1,7 @@
 /*Elements*/
-/*span {*/
-/*    border: solid 1px red;*/
-/*}*/
-
+body {
+    background-color: rgb(23, 65, 158)
+}
 
 /*CLASSES*/
 .loadingimage{
@@ -10,15 +9,40 @@
     height: 150px;
     background-color: firebrick;
 }
+.container{
+    /*display: flex;*/
+    border: black solid 2px;
+    margin: 1em 1em;
+    justify-content: space-evenly;
+    background-color: rgb(239, 239, 239)
+}
 .hidden{
     display:none;
 }
 
 
 /*ID's*/
-#delete-button{
-    width: 150px;
-    height: 150px;
+#titleHeader {
+    text-align: center;
+    margin-top: .5em;
     background-color: yellow;
 }
+#movielist {
+    border: 2px red solid;
+    margin: 2em;
+    justify-content: space-evenly;
+}
+
+
+/*Todo
+   media queries
+   no random spacing and background
+   focus boxes
+   sticky for creating a new movie
+   loading image and set interval
+   custom fonts and icons/images
+   *add genre property to movies
+   *allow user to sort
+   *allow user to search
+   */
 
