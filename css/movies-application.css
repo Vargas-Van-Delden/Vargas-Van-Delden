@@ -1,18 +1,25 @@
 /*Elements*/
+/*@font-face {*/
+/*    font-family: myFirstFont;*/
+/*    src: url(fonts/blockletter-font/blockletter sansation_light.woff);*/
+/*}*/
 body {
-    /*background-color: navy;*/
+    background-color: navy;
     /*font-family: ;*/
 
 }
+form{
+    background-color: blanchedalmond;
+}
+h2{
+    text-decoration: underline;
+}
+h5{
+    font-style: italic;
+}
 
 /*CLASSES*/
-.loadingimage{
-    width: 150px;
-    height: 150px;
-    background-color: firebrick;
-}
 .container{
-    /*display: flex;*/
     border: black solid 2px;
     margin: 1em 1em;
     justify-content: space-evenly;
@@ -23,7 +30,22 @@ body {
 .hidden{
     display:none;
 }
-.
+.blueBlack{
+    color: #1140A4;
+    text-shadow: 1px 1px black;
+    font-weight: bold;
+}
+.saveThis{
+    background-color: forestgreen;
+}
+.editThis{
+    background-color: blanchedalmond;
+}
+.deletethis{
+    background-color: firebrick;
+}
+
+
 
 
 /*ID's*/
@@ -38,14 +60,14 @@ body {
     margin: 2em;
     justify-content: space-evenly;
 }
-
+#added-movie{
+    color: #1140A4;
+}
 
 /*Todo
    media queries
-   no random spacing and background
    focus boxes
    sticky for creating a new movie
-   loading image and set interval
    custom fonts and icons/images
    *add genre property to movies
    *allow user to sort
