@@ -5,58 +5,62 @@
 /*}*/
 body {
     background-color: navy;
-    /*font-family: ;*/
-
 }
-form{
+
+form {
     background-color: blanchedalmond;
 }
-h2{
+
+h2 {
     text-decoration: underline;
 }
-h5{
+
+h5 {
     font-style: italic;
 }
 
 /*CLASSES*/
-.container{
+.container {
     border: black solid 2px;
     margin: 1em 1em;
     justify-content: space-evenly;
     background-color: #1140A4;
-    color: rgba(244,	172,	58, 1);
+    color: rgba(244, 172, 58, 1);
+}
 
+.hidden {
+    display: none;
 }
-.hidden{
-    display:none;
-}
-.blueBlack{
+
+.blueBlack {
     color: #1140A4;
     text-shadow: 1px 1px black;
     font-weight: bold;
 }
-.saveThis{
+
+.saveThis {
     background-color: forestgreen;
 }
-.editThis{
+
+.editThis {
     background-color: blanchedalmond;
 }
-.deletethis{
+
+.deletethis {
     background-color: firebrick;
 }
-/*ID's*/
-#logo{
 
-}
+/*ID's*/
 #titleHeader {
     height: 20vh;
 }
+
 #movielist {
-    /*border: 2px red solid;*/
     margin: 2em;
     justify-content: space-evenly;
 }
-#added-movie{
+
+#added-movie {
     color: #1140A4;
 }
 
