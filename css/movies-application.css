@@ -1,6 +1,8 @@
 /*Elements*/
 body {
-    background-color: rgb(23, 65, 158)
+    /*background-color: navy;*/
+    /*font-family: ;*/
+
 }
 
 /*CLASSES*/
@@ -14,21 +16,25 @@ body {
     border: black solid 2px;
     margin: 1em 1em;
     justify-content: space-evenly;
-    background-color: rgb(239, 239, 239)
+    background-color: #1140A4;
+    color: rgba(244,	172,	58, 1);
+
 }
 .hidden{
     display:none;
 }
+.
 
 
 /*ID's*/
+#logo{
+
+}
 #titleHeader {
-    text-align: center;
-    margin-top: .5em;
-    background-color: yellow;
+    height: 20vh;
 }
 #movielist {
-    border: 2px red solid;
+    /*border: 2px red solid;*/
     margin: 2em;
     justify-content: space-evenly;
 }

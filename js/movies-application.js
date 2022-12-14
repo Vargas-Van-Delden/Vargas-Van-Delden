@@ -1,5 +1,5 @@
 //used for teasting
-fetch("https://cloud-happy-fox.glitch.me/movies").then(resp => resp.json()).then(data => console.log(data))
+fetch("https://woolen-sepia-verbena.glitch.me/movies").then(resp => resp.json()).then(data => console.log(data))
 
 // Variables
 var toggle = $('#reload').toggleClass('loadingimage')
@@ -13,7 +13,7 @@ getList();
 function getList() {
     $('#reload').toggleClass('loadingimage')
     var movielist = document.getElementById('movielist');
-    fetch("https://cloud-happy-fox.glitch.me/movies").then(resp => resp.json())
+    fetch("https://woolen-sepia-verbena.glitch.me/movies").then(resp => resp.json())
         .then(data => {
             let html = '';
             for (i = 0; i < data.length; i++) {
@@ -81,13 +81,13 @@ function addMovie(m) {
     };
 
     // Fetch post to movies json
-    fetch("https://cloud-happy-fox.glitch.me/movies", {
+    fetch("https://woolen-sepia-verbena.glitch.me/movies", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(movieObj),
-    }).then(() => fetch("https://cloud-happy-fox.glitch.me/movies")).then(resp => resp.json()).then(() => getList());
+    }).then(() => fetch("https://woolen-sepia-verbena.glitch.me/movies")).then(resp => resp.json()).then(() => getList());
     addTitle.value = ''; //resets typed value
 
 }
@@ -95,9 +95,9 @@ function addMovie(m) {
 
 // Delete Movie list
 function deleteMovie(movieId) {
-    fetch("https://cloud-happy-fox.glitch.me/movies/" + movieId, {
+    fetch("https://woolen-sepia-verbena.glitch.me/movies/" + movieId, {
         method: "DELETE"
-    }).then(() => fetch("https://cloud-happy-fox.glitch.me/movies")).then(resp => resp.json()).then(() => getList());
+    }).then(() => fetch("https://woolen-sepia-verbena.glitch.me/movies")).then(resp => resp.json()).then(() => getList());
 }
 
 // Edit Movie List
@@ -106,14 +106,14 @@ function editMovie(movieID, title, rating) {
         title: title,
         rating: rating,
     };
-    fetch("https://cloud-happy-fox.glitch.me/movies/" + movieID, {
+    fetch("https://woolen-sepia-verbena.glitch.me/movies/" + movieID, {
         method: "PUT",
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(edittedMovie)
     })
-        .then(() => fetch("https://cloud-happy-fox.glitch.me/movies")).then(resp => resp.json()).then(() => getList());
+        .then(() => fetch("https://woolen-sepia-verbena.glitch.me/movies")).then(resp => resp.json()).then(() => getList());
 }
 
 submitButton.addEventListener('click', addMovie);
