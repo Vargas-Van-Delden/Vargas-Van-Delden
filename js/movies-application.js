@@ -2,7 +2,7 @@
 fetch("https://woolen-sepia-verbena.glitch.me/movies").then(resp => resp.json()).then(data => console.log(data))
 
 // Variables
-var toggle = $('#reload').toggleClass('loadingimage')
+var toggle = $('#reload').toggleClass('hidden')
 var addRating = document.getElementById("added-movie")
 var addTitle = document.getElementById('submit-title');
 var submitButton = document.querySelector('#submit-movie');
@@ -11,18 +11,19 @@ getList();
 
 // Set up the html using JQuery
 function getList() {
-    $('#reload').toggleClass('loadingimage')
+    $('#reload').toggleClass('hidden')
+
     var movielist = document.getElementById('movielist');
     fetch("https://woolen-sepia-verbena.glitch.me/movies").then(resp => resp.json())
         .then(data => {
             let html = '';
             for (i = 0; i < data.length; i++) {
                 html += `<div class="container col-sm-3">`
-                html += `<h1>${data[i].title} </h1>`
-                html += `<h3>${data[i].rating} </h3>`
-				html += `<button name="SaveChanges" class="saveThis hidden" type="submit" value="${data[i].id}">Save Changes</button>`
-				html += `<button name="Edit" class="editThis" type="submit" value="${data[i].id}">Edit Details</button>`
-                html += `<button name="Delete" class="deletethis" type="submit" value="${data[i].id}">Delete Movie</button>`
+                html += `<h2>${data[i].title} </h2>`
+                html += `<h5>${data[i].rating}</h5>`
+				html += `<button name="SaveChanges" class="saveThis hidden container-fluid" type="submit" value="${data[i].id}">Save Changes</button>`
+				html += `<button name="Edit" class="editThis container-fluid" type="submit" value="${data[i].id}">Edit Details</button>`
+                html += `<button name="Delete" class="deletethis container-fluid" type="submit" value="${data[i].id}">Delete Movie</button>`
 				html += `</div>`
             }
             movielist.innerHTML = html;
@@ -33,12 +34,12 @@ function getList() {
             // Edit Button
             $('.editThis').click(function () {
                 let editId = ($(this).val());
-                let title = $(this).parent().children('h1').first().html()
-                let rating = $(this).parent().children('h3').first().html()
+                let title = $(this).parent().children('h2').first().html()
+                let rating = $(this).parent().children('h5').first().html()
 				$(this).parent().children('.saveThis').toggleClass('hidden')
 				$(this).toggleClass('hidden')
-				$(this).parent().children('h1').first().html(`<input type='text' value='${title}' class="editarea">`);
-                $(this).parent().children('h3').first().html(editRating(rating));
+				$(this).parent().children('h2').first().html(`<input type='text' value='${title}' class="editarea container-fluid">`);
+                $(this).parent().children('h5').first().html(editRating(rating));
 
 				$(".saveThis").click(function () {
 					let titleArea = $('.editarea').val();
@@ -67,7 +68,7 @@ function getList() {
                 });
             })
         })
-        .then(() => $('#reload').toggleClass('loadingimage')
+        .then(() => $('#reload').toggleClass('hidden')
         )
 };
 
